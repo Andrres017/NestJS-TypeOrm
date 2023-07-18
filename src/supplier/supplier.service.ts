@@ -52,5 +52,7 @@ export class SupplierService {
         if(supplierDelete.affected===0){
             throw new HttpException('Supplier not found', HttpStatus.NOT_FOUND)
         }
+
+        return supplierDelete
     }
 }

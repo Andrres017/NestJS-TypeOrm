@@ -4,6 +4,8 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { SupplierModule } from './supplier/supplier.module';
+import { ProyectModule } from './proyect/proyect.module';
+import { ContractModule } from './contract/contract.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +17,7 @@ import { SupplierModule } from './supplier/supplier.module';
     database: 'nestJS',
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
-  }), UsersModule, SupplierModule],
+  }), UsersModule, SupplierModule, ProyectModule, ContractModule],
   controllers: [AppController],
   providers: [AppService],
 })
