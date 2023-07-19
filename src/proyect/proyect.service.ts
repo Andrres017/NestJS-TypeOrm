@@ -17,7 +17,7 @@ export class ProyectService {
             }
         })
 
-        if (!findProyect) {
+        if (findProyect!== null) {
             throw new HttpException('Proyect duplicate', HttpStatus.CONFLICT)
         }
 

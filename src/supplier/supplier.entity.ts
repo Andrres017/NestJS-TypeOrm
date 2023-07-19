@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Contract } from "src/contract/contract.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
 
 @Entity()
 export class Suppllier{
@@ -17,4 +19,7 @@ export class Suppllier{
         enum: ['CC', 'NIT']
     })
     documentType: string
+
+    @OneToMany(() => Contract, contract => contract.supplier)
+    contracts: Contract[];
 }

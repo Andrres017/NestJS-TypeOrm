@@ -1,7 +1,6 @@
 export enum documents {
-    open = "open",
-    close = "close",
-    pending = "pending"
+    CC = "CC",
+    NIT = "NIT"
 }
 
 export class CreateSupplierDto{

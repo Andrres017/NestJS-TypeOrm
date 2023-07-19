@@ -12,7 +12,7 @@ export class ProyectController {
 
     @Post()
     createProyect(@Body() proyect: CreateProyectDto) {
-        this.proyectService.createProyect(proyect)
+        return this.proyectService.createProyect(proyect)
     }
 
     @Get()

@@ -14,12 +14,13 @@ export class SupplierService {
                 document: supplier.document
             }
         })
+        if (findSupplier !== null) {
 
-        if (!findSupplier) {
-            throw new HttpException('Supplier duplicate', HttpStatus.CONFLICT)
+            console.log("Duplicado ")
+            return new HttpException('Supplier duplicate', HttpStatus.CONFLICT)
+        }else{
+            return await this.supplierRepository.save(supplier)
         }
-
-        return this.supplierRepository.save(supplier)
     }
 
     async updateSupplier(id: number, supplier: CreateSupplierDto) {
