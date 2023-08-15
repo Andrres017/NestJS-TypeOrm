@@ -1,0 +1,45 @@
+.App {
+  display: flex;
+  min-height: 100vh; /* Asegura que el contenido tenga al menos el alto del viewport */
+}
+
+.sidebar {
+  background-color: #211f44;
+  color: #fff;
+  padding: 20px;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%; /* Asegura que los elementos ocupen todo el ancho de la barra lateral */
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  background-color: #f4f4f4; /* Color de fondo del área de contenido */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  background-color: #292b2c;
+}
+
+.logo-image {
+  max-width: 100%; /* Ajusta el ancho máximo de la imagen */
+}
+
+/* Resto de los estilos del menú... */
