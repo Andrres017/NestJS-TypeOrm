@@ -5,6 +5,6 @@ export enum documents {
 
 export class CreateSupplierDto{
     fullName: string
-    document: number
+    document: string
     documentType: documents
 }

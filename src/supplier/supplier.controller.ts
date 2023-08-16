@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, Put, Delete, Query } from '@nestjs/common';
 import { CreateSupplierDto } from './dto/create-suppliers.dto';
 import { SupplierService } from './supplier.service';
 import { Suppllier } from './supplier.entity';
@@ -15,8 +15,18 @@ export class SupplierController {
     }
 
     @Get()
-    fiendSuppliers(): Promise<Suppllier[]> {
-        return this.supplierService.getSuppliers()
+    fiendSuppliers(
+      @Query('page') page: number,
+      @Query('limit') limit: number,
+      @Query('fullName') fullName: string,
+      @Query('document') document: string,
+    ){
+      return this.supplierService.findWithPaginationAndFilters(
+        page,
+        limit,
+        fullName,
+        document,
+      );
     }
 
     @Get(':id')

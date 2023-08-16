@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { ILike, Repository } from 'typeorm';
 import { Proyect } from './proyect.entity';
 import { CreateProyectDto } from './dto/create-proyect.dto';
 
@@ -37,9 +37,24 @@ export class ProyectService {
         return proyectfind
     }
 
-    getProyects(): Promise<Proyect[]> {
-        return this.proyectRepository.find()
-    }
+    async getProyects(page: number, limit: number, name: string): Promise<any> {
+        const skip = (page - 1) * limit;
+    
+        const [items, total] = await this.proyectRepository.findAndCount({
+          where: {
+            name: ILike(`%${name || ''}%`),
+          },
+          skip,
+          take: limit,
+        });
+    
+        return {
+          items,
+          total,
+          page,
+          limit,
+        };
+      }
 
     getProyect(id: number): Promise<Proyect> {
         return this.proyectRepository.findOne({

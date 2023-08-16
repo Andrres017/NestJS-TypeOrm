@@ -11,7 +11,7 @@ export class Suppllier{
     fullName: string
 
     @Column({ nullable: false,unique: true })
-    document: number
+    document: string
 
     @Column({
         nullable: false,

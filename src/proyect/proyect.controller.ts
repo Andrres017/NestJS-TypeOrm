@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { ProyectService } from './proyect.service';
 import { CreateProyectDto } from './dto/create-proyect.dto';
 import { Proyect } from './proyect.entity';
@@ -16,9 +16,13 @@ export class ProyectController {
     }
 
     @Get()
-    fiendproyects(): Promise<Proyect[]> {
-        return this.proyectService.getProyects()
-    }
+    findProyects(
+    @Query('page') page: number,
+    @Query('limit') limit: number,
+    @Query('name') name: string,
+  ) {
+    return this.proyectService.getProyects(page, limit, name);
+  }
 
     @Get(':id')
     fiendProyect(@Param('id') id: number): Promise<Proyect> {

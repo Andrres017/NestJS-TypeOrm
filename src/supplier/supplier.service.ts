@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Suppllier } from './supplier.entity'
-import { Repository } from 'typeorm';
+import { Like, Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateSupplierDto } from './dto/create-suppliers.dto';
 
@@ -36,9 +36,33 @@ export class SupplierService {
         return supplierfind
     }
 
-    getSuppliers(): Promise<Suppllier[]> {
+    getSuppliers(){
         return this.supplierRepository.find()
     }
+
+    async findWithPaginationAndFilters(
+        page: number,
+        limit: number,
+        fullName: string,
+        document: string,
+      ){
+        const skip = (page - 1) * limit;
+    
+        const [items, total] = await this.supplierRepository.findAndCount({
+          where: {
+            fullName: Like(`%${fullName || ''}%`), document: Like(`%${document || ''}%`)
+          },
+          skip,
+          take: limit,
+        });
+    
+        return {
+          items,
+          total,
+          page,
+          limit,
+        };
+      }
 
     getSupplier(id: number): Promise<Suppllier> {
         return this.supplierRepository.findOne({
@@ -49,7 +73,9 @@ export class SupplierService {
     }
 
     async deleteSupplier(id: number) {
+        console.log(id)
         const supplierDelete = await this.supplierRepository.delete(id)
+        
         if(supplierDelete.affected===0){
             throw new HttpException('Supplier not found', HttpStatus.NOT_FOUND)
         }
