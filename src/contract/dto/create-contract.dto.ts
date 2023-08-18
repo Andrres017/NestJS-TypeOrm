@@ -7,13 +7,14 @@ export enum contractType {
 }
 export class CreateContractDto{
 
-    numberContract: number
+    numberContract: string
     dateStart: Date
     dateFinish: Date
     poliza: string
     contractType: contractType
-    reteGarantia: number
-    reteFit: number
-    contractValueTotal: number
+    reteGarantia: string
+    reteFit: string
+    contractValueTotal: string
     supplierId: number
+    proyectId:number
 }

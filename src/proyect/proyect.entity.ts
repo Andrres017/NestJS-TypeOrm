@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Contract } from "src/contract/contract.entity";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Proyect{
@@ -7,4 +8,7 @@ export class Proyect{
 
     @Column({nullable: false,unique: true})
     name: string
+
+    @OneToMany(() => Contract, contract => contract.proyect)
+    contracts: Contract[];
 }

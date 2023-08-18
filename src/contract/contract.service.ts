@@ -39,7 +39,7 @@ export class ContractService {
 
     getContracts(): Promise<Contract[]> {
         return this.contractRepository.find({
-            relations: ['supplier']
+            relations: ['supplier', 'proyect']
         })
     }
 
@@ -48,7 +48,7 @@ export class ContractService {
             where: {
                 id: id
             },
-            relations: ['supplier']
+            relations: ['supplier', 'proyectId']
         })
     }
 

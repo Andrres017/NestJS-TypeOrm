@@ -1,3 +1,4 @@
+import { Proyect } from "src/proyect/proyect.entity";
 import { Suppllier } from "src/supplier/supplier.entity";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
@@ -7,7 +8,7 @@ export class Contract{
     id: number
 
     @Column({nullable: false,unique: true})
-    numberContract: number
+    numberContract: string
 
     @Column({ type: "date", nullable: false})
     dateStart: Date
@@ -18,21 +19,31 @@ export class Contract{
     @Column({nullable: true})
     poliza: string
 
-    @Column({nullable: false})
+    @Column({
+        nullable: false,
+        type: "enum",
+        enum: ['Todo costo', 'Servicios', 'Mano de obra', 'Compra']
+    })
     contractType: string
 
     @Column({nullable: false})
-    reteGarantia: number
+    reteGarantia: string
 
     @Column({nullable: false})
-    reteFit: number
+    reteFit: string
 
     @Column({nullable: false})
-    contractValueTotal: number
+    contractValueTotal: string
 
     @Column({nullable: false})
     supplierId: number
     
+    @Column({nullable: false})
+    proyectId: number
+
     @ManyToOne(() => Suppllier, supplier => supplier.contracts)
     supplier: Suppllier;
+
+    @ManyToOne(() => Proyect, proyect => proyect.contracts)
+    proyect: Proyect;
 }
