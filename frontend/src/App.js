@@ -12,6 +12,7 @@ import Proveedores from './Proveedores/Proveedores';
 import Proyectos from './Proyectos/Proyectos';
 import Usuarios from './usuarios/usuarios';
 import Contratos from './Contratos/Contratos';
+import EditarContrato from './Contratos/editarContratos';
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
             <Route path="/proyectos" element={<Proyectos />} />
             <Route path="/usuarios" element={<Usuarios />} />
             <Route path="/contratos" element={<Contratos />} />
+            <Route path="/contratos/:contratoId" element={<EditarContrato />} />
           </Routes>
         </div>
       </div>

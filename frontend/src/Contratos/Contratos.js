@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]);
   const [projectOptions, setProjectOptions] = useState([]);
@@ -534,7 +535,10 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
               <td>{contract.reteGarantia}</td>
               <td>{contract.reteFit}</td>
               <td>
-                <button className="btn btn-sm btn-primary">Editar</button>
+              <Link to={`/contratos/${contract.id}`} className="btn btn-sm btn-primary">
+                  Editar
+                </Link>
+
                 <button
                   className="btn btn-sm btn-danger"
                   onClick={() => handleDeleteContract(contract.id)} // Llama a la función de eliminación con el ID del contrato
