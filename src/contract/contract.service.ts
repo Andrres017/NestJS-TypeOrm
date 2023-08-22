@@ -13,10 +13,11 @@ export class ContractService {
         const findContract = await this.contractRepository.findOne({
             where: {
                 numberContract: contract.numberContract
-            }
+            },
         })
+        console.log(contract.numberContract, findContract,contract)
 
-        if (findContract !== null) {    
+        if (findContract !== null) { 
             throw new HttpException('Contract duplicate', HttpStatus.CONFLICT)
         }
 
@@ -37,11 +38,53 @@ export class ContractService {
         return contractfind
     }
 
-    getContracts(): Promise<Contract[]> {
-        return this.contractRepository.find({
-            relations: ['supplier', 'proyect']
-        })
-    }
+    async findContracts(
+        page: number,
+        limit: number,
+        numberContract: string,
+        supplierId: number,
+        proyectId: number,
+        contractType: string,
+      ): Promise<{ contracts: Contract[]; total: number; page: string; limit: string }> {
+        const skip = (page - 1) * limit;
+    
+        const queryBuilder = this.contractRepository
+          .createQueryBuilder('contract')
+          .leftJoinAndSelect('contract.supplier', 'supplier')
+          .leftJoinAndSelect('contract.proyect', 'proyect')
+          .where('1 = 1'); // Default condition to start the query
+    
+        if (numberContract) {
+          queryBuilder.andWhere('contract.numberContract LIKE :numberContract', {
+            numberContract: `%${numberContract}%`,
+          });
+        }
+    
+        if (supplierId) {
+          queryBuilder.andWhere('contract.supplierId = :supplierId', {
+            supplierId,
+          });
+        }
+    
+        if (proyectId) {
+          queryBuilder.andWhere('contract.proyectId = :proyectId', {
+            proyectId,
+          });
+        }
+    
+        if (contractType) {
+          queryBuilder.andWhere('contract.contractType = :contractType', {
+            contractType,
+          });
+        }
+    
+        const [contracts, total] = await queryBuilder
+          .skip(skip)
+          .take(limit)
+          .getManyAndCount();
+    
+        return { contracts, total, page: String(page), limit: String(limit) };
+      }
 
     getContract(id: number): Promise<Contract> {
         return this.contractRepository.findOne({

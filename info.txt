@@ -1,0 +1,14 @@
+//--------------------------BUSCAR----------------
+numero de contrato,
+proyecto,
+proveedor,
+tipo de contrato.
+
+//-------------------------TABLA------------------
+proyecto
+numero de contrato
+tipo de contrato
+proveedor
+valor total contrato  
+valor total rete garantia
+valor total rete fit

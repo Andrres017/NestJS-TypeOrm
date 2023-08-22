@@ -7,7 +7,7 @@ export class Contract{
     @PrimaryGeneratedColumn()
     id: number
 
-    @Column({nullable: false,unique: true})
+    @Column({unique: true})
     numberContract: string
 
     @Column({ type: "date", nullable: false})
