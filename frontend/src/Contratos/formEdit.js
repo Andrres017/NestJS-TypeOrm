@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { useParams } from 'react-router-dom';
 
-function FormEdit({ contractId }) {
+function FormEdit({ props }) {
+  const { contratoId } = useParams();
   const [supplierOptions, setSupplierOptions] = useState([]);
   const [projectOptions, setProjectOptions] = useState([]);
   const [formData, setFormData] = useState({
@@ -21,7 +23,7 @@ function FormEdit({ contractId }) {
     fetchSuppliers();
     fetchProjects();
     fetchContractData();
-  }, [contractId]);
+  }, [contratoId]);
 
   const fetchSuppliers = async () => {
     try {
@@ -59,9 +61,9 @@ function FormEdit({ contractId }) {
 
   const fetchContractData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/Contract/${contractId}`);
+      const response = await fetch(`http://localhost:3000/contract/${contratoId}`);
       const contractData = await response.json();
-
+      console.log(contractData)
       setFormData({
         numberContract: contractData.numberContract,
         dateStart: contractData.dateStart.split(' ')[0], // Extracting date part
@@ -91,7 +93,7 @@ function FormEdit({ contractId }) {
     event.preventDefault();
 
     try {
-      const response = await fetch(`http://localhost:3000/Contract/${contractId}`, {
+      const response = await fetch(`http://localhost:3000/contract/${contratoId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

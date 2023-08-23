@@ -86,12 +86,12 @@ export class ContractService {
         return { contracts, total, page: String(page), limit: String(limit) };
       }
 
-    getContract(id: number): Promise<Contract> {
-        return this.contractRepository.findOne({
+    async getContract(id: number): Promise<Contract> {
+        return await this.contractRepository.findOne({
             where: {
-                id: id
+                id
             },
-            relations: ['supplier', 'proyectId']
+            relations: ['supplier', 'proyect']
         })
     }
 

@@ -37,6 +37,7 @@ export class ContractController {
 
     @Get(':id')
     fiendContract(@Param('id') id: number): Promise<Contract> {
+      console.log(id)
         return this.contractService.getContract(id)
     }
 
