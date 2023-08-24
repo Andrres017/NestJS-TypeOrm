@@ -1,4 +1,4 @@
-//--------------------------BUSCAR----------------
+nest//--------------------------BUSCAR----------------
 numero de contrato,
 proyecto,
 proveedor,
@@ -12,3 +12,7 @@ proveedor
 valor total contrato  
 valor total rete garantia
 valor total rete fit
+
+
+
+movimientos
