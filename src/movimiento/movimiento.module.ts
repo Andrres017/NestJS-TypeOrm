@@ -4,8 +4,7 @@ import { Movimientos } from './movimiento.entity';
 import { MovimientoController } from './movimiento.controller';
 import { MovimientoService } from './movimiento.service';
 
-@Module(
-{   
+@Module({   
     imports: [TypeOrmModule.forFeature([Movimientos])],
     controllers: [MovimientoController],
     providers: [MovimientoService]

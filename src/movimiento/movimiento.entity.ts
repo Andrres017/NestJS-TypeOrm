@@ -1,9 +1,10 @@
 import { Contract } from "src/contract/contract.entity";
-import { Column, ManyToOne, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
 
+@Entity()
 export class Movimientos {
     //CE  Comprobante de egreso
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     id: number
 
     @Column()
