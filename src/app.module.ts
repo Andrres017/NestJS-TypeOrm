@@ -6,8 +6,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { SupplierModule } from './supplier/supplier.module';
 import { ProyectModule } from './proyect/proyect.module';
 import { ContractModule } from './contract/contract.module';
-import { MovimientoController } from './movimiento/movimiento.controller';
-import { MovimientoService } from './movimiento/movimiento.service';
 import { MovimientoModule } from './movimiento/movimiento.module';
 import { OtrosiModule } from './otrosi/otrosi.module';
 
@@ -22,7 +20,7 @@ import { OtrosiModule } from './otrosi/otrosi.module';
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
   }), UsersModule, SupplierModule, ProyectModule, ContractModule, MovimientoModule, OtrosiModule],
-  controllers: [AppController, MovimientoController],
-  providers: [AppService, MovimientoService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule { }
