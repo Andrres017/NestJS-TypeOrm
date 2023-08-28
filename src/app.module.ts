@@ -9,6 +9,7 @@ import { ContractModule } from './contract/contract.module';
 import { MovimientoController } from './movimiento/movimiento.controller';
 import { MovimientoService } from './movimiento/movimiento.service';
 import { MovimientoModule } from './movimiento/movimiento.module';
+import { OtrosiModule } from './otrosi/otrosi.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -20,7 +21,7 @@ import { MovimientoModule } from './movimiento/movimiento.module';
     database: 'nestJS',
     entities: [__dirname + '/**/*.entity{.ts,.js}'],
     synchronize: true,
-  }), UsersModule, SupplierModule, ProyectModule, ContractModule, MovimientoModule],
+  }), UsersModule, SupplierModule, ProyectModule, ContractModule, MovimientoModule, OtrosiModule],
   controllers: [AppController, MovimientoController],
   providers: [AppService, MovimientoService],
 })

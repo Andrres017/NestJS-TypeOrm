@@ -1,6 +1,8 @@
+import { Movimientos } from "src/movimiento/movimiento.entity";
+import { Otrosi } from "src/otrosi/otrosi.entity";
 import { Proyect } from "src/proyect/proyect.entity";
 import { Suppllier } from "src/supplier/supplier.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Contract{
@@ -46,4 +48,10 @@ export class Contract{
 
     @ManyToOne(() => Proyect, proyect => proyect.contracts)
     proyect: Proyect;
+
+    @OneToMany(() => Movimientos, movimiento => movimiento.contract)
+    movimiento: Movimientos[];
+    
+    @OneToMany(() => Otrosi, otrosi => otrosi.contract)
+    otrosi: Otrosi[];
 }
