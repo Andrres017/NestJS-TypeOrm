@@ -16,8 +16,8 @@ export class Otrosi {
     @Column()
     fecha: string
 
-    @Column()
-    valorTotal: string
+    @Column({type:'float'})
+    valorTotal: number
 
     @Column({
         nullable: false,

@@ -11,64 +11,95 @@ export class ProyectService {
     
 
     async createProyect(proyect: CreateProyectDto) {
-        const findProyect = await this.proyectRepository.findOne({
-            where: {
-                name: proyect.name
+        try {
+            const findProyect = await this.proyectRepository.findOne({
+                where: {
+                    name: proyect.name
+                }
+            });
+
+            if (findProyect !== null) {
+                throw new HttpException('Proyect duplicate', HttpStatus.CONFLICT);
             }
-        })
 
-        if (findProyect!== null) {
-            throw new HttpException('Proyect duplicate', HttpStatus.CONFLICT)
+            return this.proyectRepository.save(proyect);
+        } catch (error) {
+            throw new HttpException(`Error creating project: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-        return this.proyectRepository.save(proyect)
     }
 
     async updateProyect(id: number, proyect: CreateProyectDto) {
-        const proyectUpdate = await this.proyectRepository.update(id, proyect)
-        if (proyectUpdate.affected === 0) {
-            throw new HttpException('Proyect not found', HttpStatus.NOT_FOUND)
-        }
-        const proyectfind = await this.proyectRepository.findOne({
-            where: {
-                id: id
+        try {
+            const proyectUpdate = await this.proyectRepository.update(id, proyect);
+
+            if (proyectUpdate.affected === 0) {
+                throw new HttpException('Proyect not found', HttpStatus.NOT_FOUND);
             }
-        })
-        return proyectfind
+
+            const proyectfind = await this.proyectRepository.findOne({
+                where: {
+                    id: id
+                }
+            });
+
+            return proyectfind;
+        } catch (error) {
+            throw new HttpException(`Error updating project: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     async getProyects(page: number, limit: number, name: string): Promise<any> {
-        const skip = (page - 1) * limit;
-    
-        const [items, total] = await this.proyectRepository.findAndCount({
-          where: {
-            name: ILike(`%${name || ''}%`),
-          },
-          skip,
-          take: limit,
-        });
-    
-        return {
-          items,
-          total,
-          page,
-          limit,
-        };
-      }
+        try {
+            const skip = (page - 1) * limit;
 
-    getProyect(id: number): Promise<Proyect> {
-        return this.proyectRepository.findOne({
-            where: {
-                id: id
+            const [items, total] = await this.proyectRepository.findAndCount({
+                where: {
+                    name: ILike(`%${name || ''}%`),
+                },
+                skip,
+                take: limit,
+            });
+
+            return {
+                items,
+                total,
+                page,
+                limit,
+            };
+        } catch (error) {
+            throw new HttpException(`Error fetching projects: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    async getProyect(id: number): Promise<Proyect> {
+        try {
+            const proyect = await this.proyectRepository.findOne({
+                where: {
+                    id: id
+                }
+            });
+
+            if (!proyect) {
+                throw new HttpException('Proyect not found', HttpStatus.NOT_FOUND);
             }
-        })
+
+            return proyect;
+        } catch (error) {
+            throw new HttpException(`Error fetching project: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     async deleteProyect(id: number) {
-        const proyectDelete = await this.proyectRepository.delete(id)
-        if(proyectDelete.affected===0){
-            throw new HttpException('Proyect not found', HttpStatus.NOT_FOUND)
+        try {
+            const proyectDelete = await this.proyectRepository.delete(id);
+
+            if (proyectDelete.affected === 0) {
+                throw new HttpException('Proyect not found', HttpStatus.NOT_FOUND);
+            }
+
+            return proyectDelete;
+        } catch (error) {
+            throw new HttpException(`Error deleting project: ${error.message}`, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return proyectDelete
     }
 }

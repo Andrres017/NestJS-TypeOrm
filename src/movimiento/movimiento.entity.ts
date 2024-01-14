@@ -8,36 +8,29 @@ export class Movimientos {
     id: number
 
     @Column()
+    TipoDocumento: string
+
+    @Column()
     numeroCe: number
 
     @Column()
+    fecha: Date
+
+    @Column({type: 'float'})
+    valorAPagar: number
+
+    @Column({type: 'float'})
+    valorReteFit: number
+
+    @Column({type: 'float'})
+    valorReteGarantia: number
+
+    @Column({
+        nullable: false,
+        type: "enum",
+        enum: ['Contrato.', 'Rete fic.', 'Rete garantia.']
+    })
     concepto: string
-
-    @Column()
-    fecha: string
-
-    @Column()
-    valorTotal: string
-
-    @Column()
-    valorReteFit: string
-
-    @Column({
-        nullable: false,
-        type: "enum",
-        enum: ['Positivo', 'Negativo']
-    })
-    accionReteFit: string
-
-    @Column()
-    valorReteGarantia: string
-
-    @Column({
-        nullable: false,
-        type: "enum",
-        enum: ['Positivo', 'Negativo']
-    })
-    accionRetegarantia: string
 
     @ManyToOne(() => Contract, contract => contract.movimiento)
     contract: Contract;
