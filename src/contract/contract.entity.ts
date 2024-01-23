@@ -10,7 +10,7 @@ export class Contract{
     id: number
 
     @Column({unique: true})
-    numberContract: number
+    numberContract: string
 
     @Column({ type: "date", nullable: false})
     dateStart: Date
@@ -28,23 +28,26 @@ export class Contract{
     })
     contractType: string
 
-    @Column({nullable: true, type: 'float'})
+    @Column({nullable: true, type: 'float', default:0})
     reteGarantia: number
 
-    @Column({nullable: true, type: 'float'})
+    @Column({nullable: true, type: 'float', default:0})
     reteFit: number
 
-    @Column({nullable: true, type: 'float'})
+    @Column({nullable: true, type: 'float', default:0})
     reteGarantiaSaldo: number
 
-    @Column({nullable: true, type: 'float'})
+    @Column({nullable: true, type: 'float', default:0})
     reteFitSaldo: number
 
     @Column({nullable: false,  type: 'float'})
     contractValueTotal: number
 
-    @Column({nullable: false,  type: 'float'})
+    @Column({nullable: false,  type: 'float', default:0})
     contractValue: number
+
+    @Column({nullable: true,  type: 'text'})
+    description: string
 
     @Column({nullable: false})
     supplierId: number

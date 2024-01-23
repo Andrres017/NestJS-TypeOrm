@@ -9,9 +9,8 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
     dateStart: '',
     dateFinish: '',
     poliza: '',
+    description: '',
     contractType: 'Todo costo',
-    reteGarantia: '',
-    reteFit: '',
     contractValueTotal: '',
     supplierId: '',
     proyectId: '',
@@ -128,8 +127,6 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
       dateFinish: '',
       poliza: '',
       contractType: 'Todo costo',
-      reteGarantia: '',
-      reteFit: '',
       contractValueTotal: '',
       supplierId: '',
       proyectId: '',
@@ -222,12 +219,10 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
       !formData.numberContract ||
       !formData.dateStart ||
       !formData.dateFinish ||
-      !formData.poliza ||
-      !formData.reteGarantia ||
-      !formData.reteFit ||
       !formData.contractValueTotal ||
       !formData.supplierId ||
-      !formData.proyectId
+      !formData.proyectId ||
+      !formData.description
     ) {
       Swal.fire({
         icon: 'error',
@@ -239,7 +234,7 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
     }
 
     // Validaciones para campos numéricos de moneda colombiana
-    const numericFields = ['reteGarantia', 'reteFit', 'contractValueTotal'];
+    const numericFields = ['contractValueTotal'];
     for (const field of numericFields) {
       if (isNaN(parseFloat(formData[field].replace(/\./g, '').replace(',', '.')))) {
         alert(`El campo ${field} debe ser un número válido de moneda colombiana.`);
@@ -257,6 +252,10 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
 
       const projectOptionsFilter = projectOptions.filter((project) => project.name === formData.proyectId);
       formaDatav2.proyectId = projectOptionsFilter[0].id;
+
+      console.log("formaDatav2", formaDatav2, "formData", formData)
+      formaDatav2.contractValueTotal = parseFloat(formaDatav2.contractValueTotal)
+      formaDatav2.numberContract = formaDatav2.numberContract + ''
 
       const response = await fetch('http://localhost:3000/Contract', {
         method: 'POST',
@@ -304,7 +303,8 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
 
   return (
     <div className='container'>
-      <h1>Página de Contratos</h1>
+      <h1 className='text-center'>Página de Contratos</h1>
+      <h3>crear contrato</h3>
 
       <div >
       <form onSubmit={handleSubmit} className='row'>
@@ -368,30 +368,6 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
           </select>
         </div>
         <div className="mb-3 col-3">
-          <label htmlFor="reteGarantia" className="form-label">Rete Garantía:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="reteGarantia"
-            name="reteGarantia"
-            value={formData.reteGarantia}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-        </div>
-        <div className="mb-3 col-3">
-          <label htmlFor="reteFit" className="form-label">Rete Fit:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="reteFit"
-            name="reteFit"
-            value={formData.reteFit}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-        </div>
-        <div className="mb-3 col-3">
           <label htmlFor="contractValueTotal" className="form-label">Total del Valor del Contrato:</label>
           <input
             type="text"
@@ -437,16 +413,28 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
             ))}
           </datalist>
         </div>
+        <div className="mb-3 col-6">
+          <label htmlFor="description" className="form-label">Descripcion:</label>
+          <textarea
+            type="text"
+            className="form-control"
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+          />
+        </div>
         <div className='mt-4 col-3'>
-          <button type="submit" className="btn btn-primary">Crear</button>
+          <button type="submit" className="btn btn-primary">Crear contrato</button>
         </div>
       </form>
     </div>
 
-
+            <hr></hr>
       
       {/* Formulario para buscar contratos */}
       <div className="input-group mb-3 row">
+        <h3>Bucadores</h3>
   <div className="mb-3 col">
     <input
       type="text"
@@ -509,17 +497,20 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
 
 
       {/* Tabla de contratos */}
+      <h3>Resultados</h3>
 <table className="table">
   <thead>
     <tr>
       <th>ID</th>
       <th>Proyecto</th>
       <th>Número de Contrato</th>
+      <th>Número de proveedor</th>
+      <th>Nombre de proveedor</th>
       <th>Tipo de Contrato</th>
-      <th>Proveedor</th>
       <th>Valor Total Contrato</th>
+      <th>Valor Total otrosi</th>
       <th>Valor Total Rete Garantía</th>
-      <th>Valor Total Rete Fit</th>
+      <th>Valor Total Rete Fic</th>
       <th>Acciones</th>
     </tr>
   </thead>
@@ -529,9 +520,11 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
               <td>{contract.id}</td>
               <td>{contract.proyect.name}</td>
               <td>{contract.numberContract}</td>
-              <td>{contract.contractType}</td>
+              <td>{contract.supplier.document}</td>
               <td>{contract.supplier.fullName}</td>
+              <td>{contract.contractType}</td>
               <td>{contract.contractValueTotal}</td>
+              <td>{contract.contractValue}</td>
               <td>{contract.reteGarantia}</td>
               <td>{contract.reteFit}</td>
               <td>

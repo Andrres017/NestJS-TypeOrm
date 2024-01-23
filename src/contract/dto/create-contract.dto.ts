@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsEnum, IsDateString, IsOptional, IsNumberString } from 'class-validator';
+import { IsNotEmpty, IsEnum, IsDateString, IsOptional, IsNumberString, IsNumber } from 'class-validator';
 
 export enum contractType {
     Todo_costo = "Todo costo",
@@ -13,7 +13,7 @@ export class CreateContractDto {
       example: 'ABC123',
     })
     @IsNotEmpty()
-    numberContract: number;
+    numberContract: string;
   
     @ApiProperty({
       description: 'Fecha de inicio del contrato',
@@ -37,7 +37,14 @@ export class CreateContractDto {
       required: false,
     })
     poliza: string;
-  
+
+    @ApiProperty({
+      description: 'Descripcion',
+      example: 'lorem',
+      required: false,
+    })
+    description: string;
+
     @ApiProperty({
       description: 'Tipo de contrato',
       enum: contractType,
@@ -51,16 +58,16 @@ export class CreateContractDto {
       description: 'Retención de garantía',
       example: '10.5',
     })
-    @IsNotEmpty()
-    @IsNumberString()
+    @IsOptional()
+    @IsNumber()
     reteGarantia: number;
   
     @ApiProperty({
       description: 'Retención FIT',
       example: '5.8',
     })
-    @IsNotEmpty()
-    @IsNumberString()
+    @IsOptional()
+    @IsNumber()
     reteFit: number;
   
     @ApiProperty({
@@ -69,7 +76,7 @@ export class CreateContractDto {
       required: false,
     })
     @IsOptional()
-    @IsNumberString()
+    @IsNumber()
     reteGarantiaSaldo?: number;
   
     @ApiProperty({
@@ -78,7 +85,7 @@ export class CreateContractDto {
       required: false,
     })
     @IsOptional()
-    @IsNumberString()
+    @IsNumber()
     reteFitSaldo?: number;
   
     @ApiProperty({
@@ -86,15 +93,15 @@ export class CreateContractDto {
       example: '50000.00',
     })
     @IsNotEmpty()
-    @IsNumberString()
+    @IsNumber()
     contractValueTotal: number;
   
     @ApiProperty({
       description: 'Valor del contrato',
       example: '48000.00',
     })
-    @IsNotEmpty()
-    @IsNumberString()
+    @IsOptional()
+    @IsNumber()
     contractValue: number;
   
     @ApiProperty({
@@ -102,7 +109,7 @@ export class CreateContractDto {
       example: '1',
     })
     @IsNotEmpty()
-    @IsNumberString()
+    @IsNumber()
     supplierId: number;
   
     @ApiProperty({
@@ -110,6 +117,6 @@ export class CreateContractDto {
       example: '1',
     })
     @IsNotEmpty()
-    @IsNumberString()
+    @IsNumber()
     proyectId: number;
   }
