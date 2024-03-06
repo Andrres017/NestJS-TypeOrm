@@ -197,17 +197,38 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
   // Función para manejar cambios en los campos del formulario
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    if (name === 'reteGarantia') {
       setFormData({
         ...formData,
-        [name]: value.replace(/[^0-9,.]/g, ''),
+        [name]: (name === 'contractValueTotal')?formatoMexico(value):value,
       });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
+  };
+
+  const formatoMexico = (number) => {
+
+  
+    // Si el número es un string, lo convertimos a número antes de formatearlo
+    if (typeof number === 'string') {
+      // Verificamos si hay algo a la derecha del punto decimal
+      if (number.indexOf('.') !== -1 && number.split('.')[1].length === 0) {
+        // Si no hay nada a la derecha del punto decimal, retornamos el número sin formato
+        return number;
+      }
+      number = convertirANumero(number);
     }
+
+
+    const exp = /(\d)(?=(\d{3})+(?!\d))/g;
+    const rep = '$1,';
+    let arr = number.toString().split('.');
+    arr[0] = arr[0].replace(exp,rep);
+    return arr[1] ? arr.join('.'): arr[0];
+  }
+
+  const convertirANumero = (formattedNumber) => {
+    // Removemos las comas del string formateado
+    const numberString = formattedNumber.replace(/,/g, '');
+    // Parseamos el string a un número
+    return parseFloat(numberString);
   };
 
   // Función para manejar el envío del formulario
@@ -233,15 +254,6 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
       return;
     }
 
-    // Validaciones para campos numéricos de moneda colombiana
-    const numericFields = ['contractValueTotal'];
-    for (const field of numericFields) {
-      if (isNaN(parseFloat(formData[field].replace(/\./g, '').replace(',', '.')))) {
-        alert(`El campo ${field} debe ser un número válido de moneda colombiana.`);
-        return;
-      }
-    }
-
     // Envío de datos al servidor
     try {
       let formaDatav2 = [];
@@ -254,7 +266,7 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
       formaDatav2.proyectId = projectOptionsFilter[0].id;
 
       console.log("formaDatav2", formaDatav2, "formData", formData)
-      formaDatav2.contractValueTotal = parseFloat(formaDatav2.contractValueTotal)
+      formaDatav2.contractValueTotal = formaDatav2.contractValueTotal
       formaDatav2.numberContract = formaDatav2.numberContract + ''
 
       const response = await fetch('http://localhost:3000/Contract', {
@@ -375,7 +387,7 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
             id="contractValueTotal"
             name="contractValueTotal"
             value={formData.contractValueTotal}
-            onBlur={handleBlur}
+            //onBlur={handleBlur}
             onChange={handleInputChange}
           />
         </div>
@@ -516,21 +528,21 @@ function Contratos() { const [supplierOptions, setSupplierOptions] = useState([]
   </thead>
   <tbody>
   {contracts.map((contract) => (
-            <tr key={contract.id}>
+              <tr key={contract.id}>
               <td>{contract.id}</td>
               <td>{contract.proyect.name}</td>
               <td>{contract.numberContract}</td>
               <td>{contract.supplier.document}</td>
               <td>{contract.supplier.fullName}</td>
               <td>{contract.contractType}</td>
-              <td>{contract.contractValueTotal}</td>
-              <td>{contract.contractValue}</td>
-              <td>{contract.reteGarantia}</td>
-              <td>{contract.reteFit}</td>
+              <td>{formatoMexico(contract.contractValueTotal)}</td>
+              <td>{formatoMexico(contract.contractValue)}</td>
+              <td>{formatoMexico(contract.reteGarantia)}</td>
+              <td>{formatoMexico(contract.reteFit)}</td>
               <td>
               <Link to={`/contratos/${contract.id}`} className="btn btn-sm btn-primary">
                   Editar
-                </Link>
+              </Link>
 
                 <button
                   className="btn btn-sm btn-danger"

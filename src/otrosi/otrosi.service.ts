@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { OtrosiCreateDto, OtrosiUpdateDto } from './dto/otrosiDto';
 import { ContractService } from 'src/contract/contract.service';
 import { CreateContractDto } from 'src/contract/dto/create-contract.dto';
+import { convertirANumero, formatoMexico } from 'src/utils/money';
 
 @Injectable()
 export class OtrosiService {
@@ -30,13 +31,13 @@ export class OtrosiService {
             let contractValue=0 // valor pago del contrato
             for (const key in otrosis) {
                 if(otrosis[key].accion === 'Positivo'){
-                    contractValue = contractValue + otrosis[key].valorTotal
+                    contractValue = contractValue + convertirANumero(otrosis[key].valorTotal)
                 }else{
-                    contractValue = contractValue - otrosis[key].valorTotal
+                    contractValue = contractValue - convertirANumero(otrosis[key].valorTotal)
                 }
             }
             const contractUpdate = {} as CreateContractDto
-            contractUpdate.contractValue= contractValue
+            contractUpdate.contractValue = formatoMexico(contractValue) 
             await this.contractService.updateContract(otrosi.contract as unknown as number, contractUpdate)
             
             return otrosiCreate

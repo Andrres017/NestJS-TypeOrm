@@ -8,16 +8,16 @@ export class Otrosi {
     id: number
 
     @Column()
-    numeroOtrosi: number
+    numeroOtrosi: string
 
     @Column()
     concepto: string
 
     @Column()
-    fecha: string
+    fecha: Date
 
-    @Column({type:'float'})
-    valorTotal: number
+    @Column({default:'0'})
+    valorTotal: string
 
     @Column({
         nullable: false,

@@ -12,8 +12,6 @@ function FormEdit({ props }) {
     dateFinish: '',
     poliza: '',
     contractType: 'Todo costo',
-    reteGarantia: '',
-    reteFit: '',
     contractValueTotal: '',
     supplierId: '',
     proyectId: '',
@@ -70,8 +68,6 @@ function FormEdit({ props }) {
         dateFinish: contractData.dateFinish.split(' ')[0], // Extracting date part
         poliza: contractData.poliza,
         contractType: contractData.contractType,
-        reteGarantia: contractData.reteGarantia,
-        reteFit: contractData.reteFit,
         contractValueTotal: contractData.contractValueTotal,
         supplierId: contractData.supplierId,
         proyectId: contractData.proyectId,
@@ -85,8 +81,36 @@ function FormEdit({ props }) {
     const { name, value } = event.target;
     setFormData({
       ...formData,
-      [name]: value,
+      [name]: (name === 'contractValueTotal')?formatoMexico(value):value,
     });
+  };
+
+  const formatoMexico = (number) => {
+
+  
+    // Si el número es un string, lo convertimos a número antes de formatearlo
+    if (typeof number === 'string') {
+      // Verificamos si hay algo a la derecha del punto decimal
+      if (number.indexOf('.') !== -1 && number.split('.')[1].length === 0) {
+        // Si no hay nada a la derecha del punto decimal, retornamos el número sin formato
+        return number;
+      }
+      number = convertirANumero(number);
+    }
+
+
+    const exp = /(\d)(?=(\d{3})+(?!\d))/g;
+    const rep = '$1,';
+    let arr = number.toString().split('.');
+    arr[0] = arr[0].replace(exp,rep);
+    return arr[1] ? arr.join('.'): arr[0];
+  }
+
+  const convertirANumero = (formattedNumber) => {
+    // Removemos las comas del string formateado
+    const numberString = formattedNumber.replace(/,/g, '');
+    // Parseamos el string a un número
+    return parseFloat(numberString);
   };
 
   const handleSubmit = async event => {
@@ -212,30 +236,6 @@ function FormEdit({ props }) {
           </select>
         </div>
         <div className="mb-3 col-3">
-          <label htmlFor="reteGarantia" className="form-label">Rete Garantía:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="reteGarantia"
-            name="reteGarantia"
-            value={formData.reteGarantia}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-        </div>
-        <div className="mb-3 col-3">
-          <label htmlFor="reteFit" className="form-label">Rete Fit:</label>
-          <input
-            type="text"
-            className="form-control"
-            id="reteFit"
-            name="reteFit"
-            value={formData.reteFit}
-            onChange={handleInputChange}
-            onBlur={handleBlur}
-          />
-        </div>
-        <div className="mb-3 col-3">
           <label htmlFor="contractValueTotal" className="form-label">Total del Valor del Contrato:</label>
           <input
             type="text"
@@ -243,7 +243,7 @@ function FormEdit({ props }) {
             id="contractValueTotal"
             name="contractValueTotal"
             value={formData.contractValueTotal}
-            onBlur={handleBlur}
+            //onBlur={handleBlur}
             onChange={handleInputChange}
           />
         </div>

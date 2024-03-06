@@ -35,7 +35,8 @@ function Otrosi() {
   };
 
   return (
-    <div className="card">
+    <div>
+      <div className="card">
       <div className="card-header">
         <h5>Formulario de Otrosí</h5>
       </div>
@@ -93,6 +94,9 @@ function Otrosi() {
           <button type="submit" className="btn btn-primary">Crear</button>
         </form>
       </div>
+    </div>
+    <br></br>
+    <div className='card'>
       <div className="card-body">
         <div className='row'>
         <h5>Buscar Otrosí</h5>
@@ -170,6 +174,7 @@ function Otrosi() {
         </ul>
       </nav>
       </div>
+    </div>
     </div>
   );
 }

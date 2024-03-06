@@ -24,7 +24,7 @@ export class OtrosiCreateDto {
   })
   @IsNotEmpty({ message: 'El número de Otrosí no puede estar vacío' })
   @IsNumber({}, { message: 'El número de Otrosí debe ser un número' })
-  numeroOtrosi: number;
+  numeroOtrosi: string;
 
   @ApiProperty({
     description: 'Concepto del Otrosí',
@@ -40,7 +40,7 @@ export class OtrosiCreateDto {
   })
   @IsNotEmpty({ message: 'La fecha no puede estar vacía' })
   @IsDate({ message: 'La fecha debe tener el formato de fecha ISO' })
-  fecha: string;
+  fecha: Date;
 
   @ApiProperty({
     description: 'Valor Total del Otrosí',
@@ -48,7 +48,7 @@ export class OtrosiCreateDto {
   })
   @IsNotEmpty({ message: 'El valor total no puede estar vacío' })
   @IsNumberString()
-  valorTotal: number;
+  valorTotal: string;
 
   @ApiProperty({
     description: 'Acción del Otrosí',
@@ -77,8 +77,46 @@ export class OtrosiUpdateDto {
   @IsNumber({}, { message: 'El ID debe ser un número' })
   id: number;
 
-  // Resto de las propiedades igual que en OtrosiCreateDto
-  // ...
+  @ApiProperty({
+    description: 'Número de Otrosí',
+    example: 1,
+  })
+  @IsNotEmpty({ message: 'El número de Otrosí no puede estar vacío' })
+  @IsNumber({}, { message: 'El número de Otrosí debe ser un número' })
+  numeroOtrosi: string;
+
+  @ApiProperty({
+    description: 'Concepto del Otrosí',
+    example: 'Aumento de plazo',
+  })
+  @IsNotEmpty({ message: 'El concepto no puede estar vacío' })
+  @IsString({ message: 'El concepto debe ser una cadena de caracteres' })
+  concepto: string;
+
+  @ApiProperty({
+    description: 'Fecha del Otrosí',
+    example: '2024-01-01',
+  })
+  @IsNotEmpty({ message: 'La fecha no puede estar vacía' })
+  @IsDate({ message: 'La fecha debe tener el formato de fecha ISO' })
+  fecha: Date;
+
+  @ApiProperty({
+    description: 'Valor Total del Otrosí',
+    example: '5000.00',
+  })
+  @IsNotEmpty({ message: 'El valor total no puede estar vacío' })
+  @IsNumberString()
+  valorTotal: string;
+
+  @ApiProperty({
+    description: 'Acción del Otrosí',
+    example: 'Crear',
+    enum: acciones,
+  })
+  @IsNotEmpty({ message: 'La acción no puede estar vacía' })
+  @IsEnum(acciones, { message: 'La acción debe ser uno de los valores permitidos' })
+  accion: acciones;
 
   @ApiProperty({
     description: 'Contrato relacionado',

@@ -15,7 +15,7 @@ export class ContractService {
                     numberContract: contract.numberContract
                 },
             });
-
+            console.log(contract)
             if (findContract !== null) {
                 throw new HttpException('Contract duplicate', HttpStatus.CONFLICT);
             }

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsEnum, IsDateString, IsOptional, IsNumberString, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsEnum, IsDateString, IsOptional, IsNumberString, IsNumber, IsString } from 'class-validator';
 
 export enum contractType {
     Todo_costo = "Todo costo",
@@ -59,16 +59,16 @@ export class CreateContractDto {
       example: '10.5',
     })
     @IsOptional()
-    @IsNumber()
-    reteGarantia: number;
+    @IsString()
+    reteGarantia: string;
   
     @ApiProperty({
       description: 'Retención FIT',
       example: '5.8',
     })
     @IsOptional()
-    @IsNumber()
-    reteFit: number;
+    @IsString()
+    reteFit: string;
   
     @ApiProperty({
       description: 'Saldo de retención de garantía',
@@ -76,8 +76,8 @@ export class CreateContractDto {
       required: false,
     })
     @IsOptional()
-    @IsNumber()
-    reteGarantiaSaldo?: number;
+    @IsString()
+    reteGarantiaSaldo?: string;
   
     @ApiProperty({
       description: 'Saldo de retención FIT',
@@ -85,24 +85,24 @@ export class CreateContractDto {
       required: false,
     })
     @IsOptional()
-    @IsNumber()
-    reteFitSaldo?: number;
+    @IsString()
+    reteFitSaldo?: string;
   
     @ApiProperty({
       description: 'Valor total del contrato',
       example: '50000.00',
     })
     @IsNotEmpty()
-    @IsNumber()
-    contractValueTotal: number;
+    @IsString()
+    contractValueTotal: string;
   
     @ApiProperty({
       description: 'Valor del contrato',
       example: '48000.00',
     })
     @IsOptional()
-    @IsNumber()
-    contractValue: number;
+    @IsString()
+    contractValue: string;
   
     @ApiProperty({
       description: 'ID del proveedor',

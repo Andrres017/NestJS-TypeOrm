@@ -28,23 +28,23 @@ export class Contract{
     })
     contractType: string
 
-    @Column({nullable: true, type: 'float', default:0})
-    reteGarantia: number
+    @Column({nullable: false,  default:'0'})
+    reteGarantia: string
 
-    @Column({nullable: true, type: 'float', default:0})
-    reteFit: number
+    @Column({nullable: false,  default:'0'})
+    reteFit: string
 
-    @Column({nullable: true, type: 'float', default:0})
-    reteGarantiaSaldo: number
+    @Column({nullable: false,  default:'0'})
+    reteGarantiaSaldo:string
 
-    @Column({nullable: true, type: 'float', default:0})
-    reteFitSaldo: number
+    @Column({nullable: false,  default:'0'})
+    reteFitSaldo: string
 
-    @Column({nullable: false,  type: 'float'})
-    contractValueTotal: number
+    @Column({nullable: false,  default:'0'})
+    contractValueTotal: string
 
-    @Column({nullable: false,  type: 'float', default:0})
-    contractValue: number
+    @Column({nullable: false, default:'0'})
+    contractValue: string
 
     @Column({nullable: true,  type: 'text'})
     description: string
